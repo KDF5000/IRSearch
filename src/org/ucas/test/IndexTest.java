@@ -24,9 +24,11 @@ public class IndexTest {
                 "注。对此辽宁省政法委、省公安厅高度重视。当日,责成有关领导专程赴阜新听取案件调查\n" +
                 "情况。为加强对案件的督办和指导,省有关部门迅速成立工作组,赴阜新督办、指导案件调\n" +
                 "查工作,并将情况上报有关部门。";
-
+        sInput = sInput.replaceAll("\\s", "");
+        System.out.println(sInput.replaceAll("\\s", ""));
         document.addField(new Field("content", sInput));
         document.addField(new Field("time", System.nanoTime()));
+        document.setDocID(12);
         indexWriter.addDocument(document);
     }
 }

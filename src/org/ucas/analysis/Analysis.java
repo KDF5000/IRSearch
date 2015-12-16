@@ -1,5 +1,6 @@
 package org.ucas.analysis;
 
+import org.ucas.document.PostIndexItem;
 import org.ucas.utils.NLPUtils;
 
 import java.util.HashMap;
@@ -30,14 +31,18 @@ public class Analysis{
      * @param str 分好词已空格隔开的string
      * @return HashMap(word,count)
      */
-    public HashMap<String, Integer> countWords(String str){
-        HashMap<String, Integer> countHash = new HashMap<String, Integer>();
+    public HashMap<String, PostIndexItem> countWords(String str, long docId){
+        HashMap<String, PostIndexItem> countHash = new HashMap<String, PostIndexItem>();
         String []wordsList = str.split("\\b");
         for(int i=0; i< wordsList.length; i++){
             if(!countHash.containsKey(wordsList[i])){
-                countHash.put(wordsList[i], 1);
+                PostIndexItem item = new PostIndexItem(docId, 1);
+                countHash.put(wordsList[i], item);
             }else{
-                countHash.put(wordsList[i], countHash.get(wordsList[i])+1);
+                PostIndexItem item = countHash.get(wordsList[i]);
+                int tf = item.getTf();
+                item.setTf(tf+1);
+                countHash.put(wordsList[i], item);
             }
         }
         return countHash;
